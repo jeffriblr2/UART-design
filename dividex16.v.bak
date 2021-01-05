@@ -1,0 +1,27 @@
+// Divide by N clock generator
+module dividex16 (clock, reset, N, Nout, count, target);
+input clock, reset;
+input [31:0] N;
+output reg Nout;
+output reg [31:0] count;
+output reg [31:0] target;
+always @ (posedge clock, negedge reset)
+begin
+if (reset)
+begin
+Nout <= 1'b0;
+count <= 32'b0;
+target <= N/2;
+end
+else
+begin
+count <= count + 1'b1;
+if (count == target)
+begin
+target <= target + N/2;
+Nout <= ~Nout;
+end
+else Nout <= Nout;
+end
+end
+endmodule
